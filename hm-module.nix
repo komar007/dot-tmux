@@ -27,7 +27,6 @@ in
 
   # ... dependencies of the tmux config:
   config.home.file = {
-    ".tmux/deps/fzf-tmux".source = "${pkgs.fzf}/bin/fzf-tmux";
     ".tmux/deps/fzf".source = "${pkgs.fzf}/bin/fzf";
     ".tmux/deps/bat".source = "${pkgs.bat}/bin/bat";
     ".tmux/deps/xsel".source = "${pkgs.xsel}/bin/xsel";
