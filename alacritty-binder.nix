@@ -2,7 +2,7 @@
   # This function converts a tmux configuration into alacritty keyboard bindings.
   #
   # It is used to define key combinations that cannot be intercepted from a regular terminal (like
-  # Ctrl+Shift+p - which is indistinguishable from Ctrl+p or Ctrl+enter) and binding them in
+  # Ctrl+Shift+p - which is indistinguishable from Ctrl+p - or Ctrl+enter) and binding them in
   # alacritty to unicode PUA code points which can then be bound to actions in tmux.
   #
   # The tmux config needs to follow a specific format. First, define each binding in one line by
@@ -15,22 +15,21 @@
   #   - C for Control,
   #   - M for Alt,
   # - <mnemonic> is an alphanumeric lower- or upper-case character or one of the supported
-  #   mnemonics defined below.
-  # - <CCCC> is the unicode code point in hex
+  #   mnemonics defined below,
+  # - <CCCC> is the unicode code point in hex.
   #
   # The shift modifier is automatically added when the right mnemonic is used (for example M instead
   # of m or tilde instead of tick, etc).
   #
   # Then, each defined variable can be used to define a bind in tmux, like so:
   #
-  # bind $kC_M switch-client -l
+  # bind -n $kC_M switch-client -l
   #
   # The returned value is a list of key bindings suitable as the value of
   # programs.alacritty.settings.keyboard.bindings home-manager option.
   getAlacrittyBindings = tmux-conf:
   let
-    conf = builtins.readFile ./tmux.conf;
-    lines = lib.splitString "\n" conf;
+    lines = lib.splitString "\n" tmux-conf;
     alacritty-mods = {
       C = "Control";
       M = "Alt";
