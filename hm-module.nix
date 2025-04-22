@@ -1,3 +1,4 @@
+# Home-manager module with tmux & my personal configuration & the configuration's dependencies
 { config, lib, pkgs, tmux, ... }:
 let
   pidtree_mon = pkgs.rustPlatform.buildRustPackage rec {

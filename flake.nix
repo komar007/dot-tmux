@@ -11,12 +11,15 @@
         };
         tmux = pkgs.tmux;
       in rec {
-        packages.tmux = tmux;
-        packages.default = packages.tmux;
-        homeManagerModules.default = args: import ./hm-module.nix (args // {
+        # My tmux configuration: this enables tmux + populates ~/.tmux.conf and ~/.tmux/
+        homeManagerModules.tmux = args: import ./hm-module.nix (args // {
           inherit pkgs;
-          tmux = packages.tmux;
+          inherit tmux;
         });
+        homeManagerModules.default = homeManagerModules.tmux;
+
+        # Alacritty unicode PUA key bindings required by some tmux binds
+        homeManagerModules.alacrittyKeyBinds = import ./alacritty-bindings.nix;
       }
     );
 }
