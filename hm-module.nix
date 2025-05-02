@@ -25,6 +25,7 @@ in
   config.home.file.".tmux.conf".text = tmux-conf;
 
   config.home.file.".tmux/bin".source = ./tmux/bin;
+  config.home.file.".tmux/conf.d".source = ./tmux/conf.d;
 
   # ... dependencies of the tmux config:
   config.home.file = {
