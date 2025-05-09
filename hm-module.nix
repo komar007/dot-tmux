@@ -4,9 +4,11 @@ let
   pidtree_mon = pkgs.rustPlatform.buildRustPackage rec {
     pname = "pidtree_mon";
     version = "0.2.2";
-    src = pkgs.fetchCrate {
-      inherit pname version;
-      hash = "sha256-METVcuLDXXRjoYSuPGHj0Kv1QzpwIdnIBoCeQi5a38w=";
+    src = pkgs.fetchFromGitHub {
+      owner = "komar007";
+      repo = "pidtree_mon";
+      rev = "196419efe1e02a7f103152a1b410cd088130eb1c";
+      hash = "sha256-MjoeeHVtXPaCXoNpIiwtEcjw1GImr6i74yjQhgK42nA=";
     };
     cargoHash = "sha256-6Z5dBwidZBz5Urt/n33l1MZRO4txDcG1Qk8RQmg6UoI=";
   };
