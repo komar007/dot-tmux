@@ -3,12 +3,12 @@
 let
   pidtree_mon = pkgs.rustPlatform.buildRustPackage rec {
     pname = "pidtree_mon";
-    version = "0.2.2";
+    version = "0.2.3";
     src = pkgs.fetchCrate {
       inherit pname version;
-      hash = "sha256-METVcuLDXXRjoYSuPGHj0Kv1QzpwIdnIBoCeQi5a38w=";
+      hash = "sha256-3UNs6Lvp5JwCzoqJUmOKxvI6VAbU5mbyJz75fYEzNEI=";
     };
-    cargoHash = "sha256-6Z5dBwidZBz5Urt/n33l1MZRO4txDcG1Qk8RQmg6UoI=";
+    cargoHash = "sha256-6acEx49cTqAQ32AOdduKFbtC3K3jet9a8zBvIEnO1/g=";
   };
   # set .tmux.conf's DEP_PREFIX to a directory we'll populate below with all dependencies...
   tmux-conf-input = builtins.readFile ./tmux.conf;
