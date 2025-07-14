@@ -10,9 +10,13 @@ FZF=${DEP_PREFIX}fzf
 XSEL=${DEP_PREFIX}xsel
 BAT_HIGHLIGHT="${DEP_PREFIX}bat --theme gruvbox-dark --color=always --decorations never"
 
+if [ "$FZF_TMUX" = 1 ]; then
+    FZF_TMUX="--tmux 100%,100%"
+fi
+
 # shellcheck disable=SC2086
 $FZF \
-    --tmux 100%,100% \
+    $FZF_TMUX \
     $FZF_TMUX_COMMON_STYLE \
     --with-nth=2.. \
     --no-sort \
