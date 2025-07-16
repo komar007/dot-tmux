@@ -1,5 +1,8 @@
 #!/bin/sh
 
+set -e
+DIR=$(cd "$(dirname "$0")" && pwd)
+
 TMP_CAPTURE_BARE="$1"
 TMP_CAPTURE="$2"
 
@@ -10,13 +13,19 @@ FZF=${DEP_PREFIX}fzf
 XSEL=${DEP_PREFIX}xsel
 BAT_HIGHLIGHT="${DEP_PREFIX}bat --theme gruvbox-dark --color=always --decorations never"
 
-if [ "$FZF_TMUX" = 1 ]; then
-    FZF_TMUX="--tmux 100%,100%"
+FZF_MODE_OPTS=""
+if [ "$MODE" = full ]; then
+    FZF_MODE_OPTS="--tmux 100%,100%"
+elif [ "$MODE" = pane ]; then
+    FZF_MODE_OPTS=""
+    FZF="$DIR/fzf_tmux_pane.sh"
+elif [ "$MODE" != "" ]; then
+    exit 1
 fi
 
 # shellcheck disable=SC2086
 $FZF \
-    $FZF_TMUX \
+    $FZF_MODE_OPTS \
     $FZF_TMUX_COMMON_STYLE \
     --with-nth=2.. \
     --no-sort \
