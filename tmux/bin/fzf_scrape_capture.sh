@@ -40,6 +40,7 @@ fi
 "$DIR"/tokenize_capture.sh "$WHAT" < "$CAPTURE_BARE" | $FZF \
     $FZF_MODE_OPTS \
     $FZF_TMUX_COMMON_STYLE \
+    -m \
     --with-nth=2.. \
     --no-sort \
     --padding=0% \
