@@ -1,10 +1,23 @@
 #!/bin/sh
 
+# Take a terminal session capture, scrape tokens and let the user select some
+# using fzf. Print the selected items.
+
 set -e
 DIR=$(cd "$(dirname "$0")" && pwd)
 
-TMP_CAPTURE_BARE="$1"
-TMP_CAPTURE="$2"
+# session capture stripped from any "rich-text" control codes
+CAPTURE_BARE="$1"
+# full session capture with colors used for preview
+CAPTURE="$2"
+# tokenization method, see tokenize_capture.sh
+WHAT="$3"
+
+# method of running fzf:
+# - "full": take full window (tmux mode)
+# - "pane": fill currently active pane (tmux mode)
+# - "" (default): plain tmux mode (no special tmux handling)
+: "${MODE:-}"
 
 : "${DEP_PREFIX:-}"
 : "${FZF_TMUX_COMMON_STYLE:-}"
@@ -24,7 +37,7 @@ elif [ "$MODE" != "" ]; then
 fi
 
 # shellcheck disable=SC2086
-$FZF \
+"$DIR"/tokenize_capture.sh "$WHAT" < "$CAPTURE_BARE" | $FZF \
     $FZF_MODE_OPTS \
     $FZF_TMUX_COMMON_STYLE \
     --with-nth=2.. \
@@ -32,11 +45,14 @@ $FZF \
     --padding=0% \
     --margin=0% \
     --preview " \
-        grep -Fn -- {2..} $TMP_CAPTURE_BARE \
+        grep -Fn -- {2..} $CAPTURE_BARE \
         | cut -d: -f1 \
         | sed 's/^/-H /' \
-        | xargs $BAT_HIGHLIGHT $TMP_CAPTURE \
+        | xargs $BAT_HIGHLIGHT $CAPTURE \
     " \
     --preview-window="up,80%,nowrap,border-none,+{1}+1/1" \
     --bind "ctrl-y:execute(tmux set-buffer {2..} && echo {2..} | $XSEL -i --primary)+abort" \
+    --bind "f1:reload:cat $CAPTURE_BARE | $DIR/tokenize_capture.sh urls" \
+    --bind "f2:reload:cat $CAPTURE_BARE | $DIR/tokenize_capture.sh words" \
+    --bind "f3:reload:cat $CAPTURE_BARE | $DIR/tokenize_capture.sh big-words" \
 | cut -d' ' -f 2-

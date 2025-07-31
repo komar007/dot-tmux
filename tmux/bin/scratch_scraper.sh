@@ -18,5 +18,4 @@ if [ "$(wc -l < "$CAPTURE_BARE")" -le 3 ]; then
     exit
 fi
 # shellcheck disable=SC2094
-"$DIR"/tokenize_capture.sh words < "$CAPTURE_BARE" \
-    | "$DIR"/fzf_scrape_capture.sh "$CAPTURE_BARE" "$CAPTURE"
+"$DIR"/fzf_scrape_capture.sh "$CAPTURE_BARE" "$CAPTURE" words

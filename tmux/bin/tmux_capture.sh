@@ -15,4 +15,4 @@ fi
 # shellcheck disable=SC2086
 tmux capture-pane -eJp $OPTS > "$TMP_CAPTURE"
 # shellcheck disable=SC2086
-tmux capture-pane -Jp $OPTS | tee "$TMP_CAPTURE_BARE"
+tmux capture-pane -Jp $OPTS > "$TMP_CAPTURE_BARE"
