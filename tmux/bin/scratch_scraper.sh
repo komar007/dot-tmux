@@ -15,7 +15,7 @@ PROMPT_NO_TITLE=1 script -B "$RAW" -q -c "$SHELL" </dev/tty >/dev/tty 2>/dev/tty
 sed '1d' "$RAW" | head -n -2 > "$CAPTURE"
 "${DEP_PREFIX}ansi2txt" < "$CAPTURE" > "$CAPTURE_BARE"
 if [ "$(wc -l < "$CAPTURE_BARE")" -le 3 ]; then
-    exit
+    exit 1
 fi
 # shellcheck disable=SC2094
 "$DIR"/fzf_scrape_capture.sh "$CAPTURE_BARE" "$CAPTURE" words
