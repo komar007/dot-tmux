@@ -4,8 +4,8 @@ HOW="$1"
 
 case "$HOW" in
     urls) REGEX="https?:\/\/[^][ ^<>]+" ;;
-    words) REGEX="[^][ 	]+" ;;
-    big-words) REGEX="[^ 	]+" ;;
+    words) REGEX="[^][ 	]{4,}" ;;
+    big-words) REGEX="[^ 	]{4,}" ;;
 esac
 
-grep --color=none -onE "$REGEX" | sed 's/:/ /' | tac | awk '!seen[$0]++'
+grep --color=none -onP "$REGEX(?!.*)" | sed 's/:/ /' | tac | awk '!seen[$0]++'
