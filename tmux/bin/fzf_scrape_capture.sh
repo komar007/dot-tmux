@@ -17,10 +17,11 @@ WHAT="$3"
 # - "full": take full window (tmux mode)
 # - "pane": fill currently active pane (tmux mode)
 # - "" (default): plain tmux mode (no special tmux handling)
-: "${MODE:-}"
+MODE="${MODE:-}"
+PREVIEW_HEIGHT="${PREVIEW_HEIGHT:-80%}"
 
-: "${DEP_PREFIX:-}"
-: "${FZF_TMUX_COMMON_STYLE:-}"
+DEP_PREFIX="${DEP_PREFIX:-}"
+FZF_TMUX_COMMON_STYLE="${FZF_TMUX_COMMON_STYLE:-}"
 
 FZF=${DEP_PREFIX}fzf
 XSEL=${DEP_PREFIX}xsel
@@ -58,7 +59,7 @@ OUT=$(
             | sed 's/^/-H /' \
             | xargs $BAT_HIGHLIGHT $CAPTURE \
         " \
-        --preview-window="up,80%,nowrap,border-none,+{1}+1/1" \
+        --preview-window="up,${PREVIEW_HEIGHT},nowrap,border-none,+{1}+1/1" \
         --bind "ctrl-y:execute(tmux set-buffer {2..} && echo {2..} | $XSEL -i --primary)+abort" \
         --bind "f1:reload:cat $CAPTURE_BARE | $DIR/tokenize_capture.sh urls" \
         --bind "f2:reload:cat $CAPTURE_BARE | $DIR/tokenize_capture.sh words" \
