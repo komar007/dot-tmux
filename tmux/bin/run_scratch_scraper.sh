@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -e
 DIR=$(cd "$(dirname "$0")" && pwd)
@@ -6,20 +6,30 @@ DIR=$(cd "$(dirname "$0")" && pwd)
 : "${BGCOLOR:-#ff00ff}"
 
 GEOMETRY=$(tmux display-message -p -- " \
-    -x #{e|+:#{pane_left},2} \
-    -w #{e|-:#{pane_width},4} \
-    -y #{e|-:#{e|-:#{e|+:#{pane_bottom},#{cursor_y}},#{pane_height}},1} \
-    -h #{e|-:#{cursor_y},4} \
+    #{window_height} \
+    #{e|+:#{pane_left},2} \
+    #{e|-:#{pane_width},4} \
+    #{?#{e|>:#{e|+:#{pane_top},#{cursor_y}},#{e|/:#{window_height},2}}, \
+        #{e|-:#{e|+:#{pane_top},#{cursor_y}},1} \
+        #{e|-:#{e|+:#{pane_top},#{cursor_y}},4} \
+        top \
+        , \
+        #{window_height} \
+        #{e|-:#{e|-:#{window_height},#{e|+:#{pane_top},#{cursor_y}}},4} \
+        bottom \
+    } \
 ")
+read -r H x w y h pos <<< "$GEOMETRY"
 
 # shellcheck disable=SC2086
 tmux display-popup \
     -E \
     -s "bg=$BGCOLOR" \
-    $GEOMETRY \
+    -x "$x" -w "$w" -y "$y" -h "$h" \
     " \
         tmux send-keys -l ▕; \
         RES=\$( \
+            if [ $pos = top ]; then yes '' | head -n \"$H\" > /dev/tty; fi; \
             DEP_PREFIX=\"$DEP_PREFIX\" \
             FZF_TMUX_COMMON_STYLE=\"$FZF_TMUX_COMMON_STYLE --color=preview-bg:$BGCOLOR\" \
             ${DIR}/scratch_scraper.sh \
