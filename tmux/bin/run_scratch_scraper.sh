@@ -6,6 +6,7 @@ DIR=$(cd "$(dirname "$0")" && pwd)
 : "${BGCOLOR:-#ff00ff}"
 
 GEOMETRY=$(tmux display-message -p -- " \
+    #{pane_current_path} \
     #{window_height} \
     #{e|+:#{pane_left},2} \
     #{e|-:#{pane_width},4} \
@@ -19,7 +20,7 @@ GEOMETRY=$(tmux display-message -p -- " \
         bottom \
     } \
 ")
-read -r H x w y h pos <<< "$GEOMETRY"
+read -r C H x w y h pos <<< "$GEOMETRY"
 
 # shellcheck disable=SC2086
 tmux display-popup \
@@ -30,6 +31,7 @@ tmux display-popup \
         tmux send-keys -l ▕; \
         RES=\$( \
             if [ $pos = top ]; then yes '' | head -n \"$H\" > /dev/tty; fi; \
+            cd \"$C\";
             DEP_PREFIX=\"$DEP_PREFIX\" \
             FZF_TMUX_COMMON_STYLE=\"$FZF_TMUX_COMMON_STYLE --color=preview-bg:$BGCOLOR\" \
             ${DIR}/scratch_scraper.sh \
