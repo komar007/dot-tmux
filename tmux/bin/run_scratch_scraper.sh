@@ -22,6 +22,13 @@ GEOMETRY=$(tmux display-message -p -- " \
 ")
 read -r C H x w y h pos <<< "$GEOMETRY"
 
+# if scratch shell pane above cursor, make the first prompt close to the cursor by prepending
+# session with a wall of newlines
+PADDING=""
+if [ "$pos" = top ]; then
+    PADDING=$(yes '\n' | head -n "$H")
+fi;
+
 # shellcheck disable=SC2086
 tmux display-popup \
     -E \
@@ -30,10 +37,10 @@ tmux display-popup \
     " \
         tmux send-keys -l ▕; \
         RES=\$( \
-            if [ $pos = top ]; then yes '' | head -n \"$H\" > /dev/tty; fi; \
             cd \"$C\";
             DEP_PREFIX=\"$DEP_PREFIX\" \
             FZF_TMUX_COMMON_STYLE=\"$FZF_TMUX_COMMON_STYLE --color=preview-bg:$BGCOLOR\" \
+            PADDING=\"$PADDING\" \
             ${DIR}/scratch_scraper.sh \
         ); \
         ok=\$?

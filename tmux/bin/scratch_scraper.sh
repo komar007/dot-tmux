@@ -15,6 +15,9 @@
 #
 # Known quirks that must be handled by the shell are:
 # - setting title is not correctly handled by script.
+#
+# PADDING - an environment variable that will be printed before the session,
+#           escaped characters are supported via "echo -e".
 
 set -e
 DIR=$(cd "$(dirname "$0")" && pwd)
@@ -22,7 +25,11 @@ DIR=$(cd "$(dirname "$0")" && pwd)
 RAW=$(mktemp)
 CAPTURE=$(mktemp)
 CAPTURE_BARE=$(mktemp)
-SHELL_SESSION_RECORDED_BY=script script -B "$RAW" -q -c "$SHELL" </dev/tty >/dev/tty 2>/dev/tty || true
+SHELL_SESSION_RECORDED_BY=script \
+    script -B "$RAW" -q \
+    -c "echo -e \"$PADDING\" && $SHELL" \
+    </dev/tty >/dev/tty 2>/dev/tty \
+    || true
 sed '1d' "$RAW" | head -n -2 > "$CAPTURE"
 "${DEP_PREFIX}ansi2txt" < "$CAPTURE" > "$CAPTURE_BARE"
 if [ "$(wc -l < "$CAPTURE_BARE")" -le 3 ]; then
