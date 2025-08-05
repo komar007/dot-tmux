@@ -35,5 +35,6 @@ in
     ".tmux/deps/pidtree_mon".source = "${pidtree_mon}/bin/pidtree_mon";
     ".tmux/deps/tput".source = "${pkgs.ncurses}/bin/tput";
     ".tmux/deps/ansi2txt".source = "${pkgs.colorized-logs}/bin/ansi2txt";
+    ".tmux/deps/script".source = "${pkgs.unixtools.script}/bin/script";
   };
 }

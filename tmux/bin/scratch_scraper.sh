@@ -26,7 +26,7 @@ RAW=$(mktemp)
 CAPTURE=$(mktemp)
 CAPTURE_BARE=$(mktemp)
 SHELL_SESSION_RECORDED_BY=script \
-    script -B "$RAW" -q \
+    "${DEP_PREFIX}script" -B "$RAW" -q \
     -c "echo -e \"$PADDING\" && $SHELL" \
     </dev/tty >/dev/tty 2>/dev/tty \
     || true
