@@ -24,7 +24,13 @@ WHAT="$3"
 
 FZF=${DEP_PREFIX}fzf
 XSEL=${DEP_PREFIX}xsel
-BAT_HIGHLIGHT="${DEP_PREFIX}bat --theme gruvbox-dark --color=always --decorations never"
+BAT_HIGHLIGHT="${DEP_PREFIX}bat \
+    --theme=gruvbox-dark \
+    --color=always \
+    --decorations=never \
+    --style=plain \
+    --paging=never \
+"
 
 FZF_MODE_OPTS=""
 if [ "$MODE" = full ]; then
