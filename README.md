@@ -15,6 +15,9 @@ Among the most notable features there are:
 - battery status with a nice icon, remaining percentage and charging status,
 - neovim windows integration.
 
+## Screenshots
+
+![dot-tmux screenshot](/../main/screenshot1.png?raw=true "dot-tmux screenshot")
 
 ## Installation
 
