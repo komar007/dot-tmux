@@ -35,7 +35,7 @@ Modules for Home Manager are provided as a flake:
 
 <details>
 <summary>
-  New to home-manager? Expand installtion instructions
+  New to home-manager? Expand installation instructions
 </summary>
 
 ... or better, read the [guide](https://nix-community.github.io/home-manager/) first.

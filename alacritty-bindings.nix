@@ -1,5 +1,5 @@
 # This module adds alacritty keyboard bindings generated from tmux config using alacritty-binder
-{ config, lib, pkgs, tmux, ... }:
+{ lib, ... }:
 let
   tmux-conf = builtins.readFile ./tmux.conf;
   binder = import ./alacritty-binder.nix { inherit lib; };

@@ -1,5 +1,5 @@
 # Home-manager module with tmux & my personal configuration & the configuration's dependencies
-{ config, lib, pkgs, tmux, ... }:
+{ pkgs, tmux, ... }:
 let
   pidtree_mon = pkgs.rustPlatform.buildRustPackage rec {
     pname = "pidtree_mon";
@@ -12,10 +12,9 @@ let
   };
   # set .tmux.conf's DEP_PREFIX to a directory we'll populate below with all dependencies...
   tmux-conf-input = builtins.readFile ./tmux.conf;
-  tmux-conf = builtins.replaceStrings
-    [ ''%hidden DEP_PREFIX=""'']
-    [ ''%hidden DEP_PREFIX="~/.tmux/deps/"'' ]
-    tmux-conf-input;
+  tmux-conf =
+    builtins.replaceStrings [ ''%hidden DEP_PREFIX=""'' ] [ ''%hidden DEP_PREFIX="~/.tmux/deps/"'' ]
+      tmux-conf-input;
 in
 {
   config.home.packages = [
