@@ -1,5 +1,10 @@
 # Home-manager module with tmux & my personal configuration & the configuration's dependencies
-{ pkgs, tmux, ... }:
+{
+  pkgs,
+  pkgs-2511,
+  tmux,
+  ...
+}:
 let
   pidtree_mon = pkgs.rustPlatform.buildRustPackage rec {
     pname = "pidtree_mon";
@@ -28,7 +33,7 @@ in
 
   # ... dependencies of the tmux config:
   config.home.file = {
-    ".tmux/deps/fzf".source = "${pkgs.fzf}/bin/fzf";
+    ".tmux/deps/fzf".source = "${pkgs-2511.fzf}/bin/fzf";
     ".tmux/deps/bat".source = "${pkgs.bat}/bin/bat";
     ".tmux/deps/xsel".source = "${pkgs.xsel}/bin/xsel";
     ".tmux/deps/pidtree_mon".source = "${pidtree_mon}/bin/pidtree_mon";

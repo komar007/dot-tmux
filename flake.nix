@@ -4,6 +4,7 @@
     # FIXME: we need relatively new nixfmt.
     # Consolidate with nixpkgs when we are ready to switch to tmux-3.6a
     nixpkgs-nixfmt.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-2511.url = "github:nixos/nixpkgs/nixos-25.11";
     flake-utils.url = "github:numtide/flake-utils";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -21,6 +22,9 @@
         pkgs-nixfmt = import inputs.nixpkgs-nixfmt {
           inherit system;
         };
+        pkgs-2511 = import inputs.nixpkgs-2511 {
+          inherit system;
+        };
         tmux = pkgs.tmux;
         treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs-nixfmt ./treefmt.nix;
       in
@@ -31,8 +35,7 @@
           import ./hm-module.nix (
             args
             // {
-              inherit pkgs;
-              inherit tmux;
+              inherit pkgs tmux pkgs-2511;
             }
           );
         homeManagerModules.default = homeManagerModules.tmux;

@@ -55,18 +55,21 @@ bind_change_tokenization() {
 
 tokenization_binds=()
 n=1
-for what in $("$DIR"/tokenize_capture.sh --list); do
+while read -r what extra_bind; do
+    if [ -n "$extra_bind" ]; then
+        extra_bind=",$extra_bind"
+    fi
     tokenization_binds=(
         "${tokenization_binds[@]}"
         "--bind"
-        "f$n:$(bind_change_tokenization "$what")"
+        "f$n$extra_bind:$(bind_change_tokenization "$what")"
     )
     ((n++))
-done
+done < <("$DIR"/tokenize_capture.sh --list)
 
 # shellcheck disable=SC2086
 OUT=$(
-    "$DIR"/tokenize_capture.sh "$WHAT" < "$CAPTURE_BARE" | $FZF \
+    "$DIR"/tokenize_capture.sh "$WHAT" <"$CAPTURE_BARE" | $FZF \
         $FZF_MODE_OPTS \
         $FZF_TMUX_COMMON_STYLE \
         -m \
