@@ -72,8 +72,8 @@ OUT=$(
         -m \
         --with-nth=2.. \
         --no-sort \
-        --padding=0% \
-        --margin=0% \
+        --padding=0 \
+        --margin=0 \
         --prompt "$(prompt_for "$WHAT")" \
         --preview " \
             grep -Fn -- {2..} $CAPTURE_BARE \
