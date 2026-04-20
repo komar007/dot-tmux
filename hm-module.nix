@@ -1,10 +1,5 @@
 # Home-manager module with tmux & my personal configuration & the configuration's dependencies
-{
-  pkgs,
-  pkgs-2511,
-  tmux,
-  ...
-}:
+{ pkgs, tmux, ... }:
 let
   pidtree_mon = pkgs.rustPlatform.buildRustPackage rec {
     pname = "pidtree_mon";
@@ -13,7 +8,7 @@ let
       inherit pname version;
       hash = "sha256-3UNs6Lvp5JwCzoqJUmOKxvI6VAbU5mbyJz75fYEzNEI=";
     };
-    cargoHash = "sha256-6acEx49cTqAQ32AOdduKFbtC3K3jet9a8zBvIEnO1/g=";
+    cargoHash = "sha256-8K5UuOrCkz+mKjE2C4khIx9Y1VoYbwciGnEcAeFxKOk=";
   };
   # set .tmux.conf's DEP_PREFIX to a directory we'll populate below with all dependencies...
   tmux-conf-input = builtins.readFile ./tmux.conf;
@@ -33,7 +28,7 @@ in
 
   # ... dependencies of the tmux config:
   config.home.file = {
-    ".tmux/deps/fzf".source = "${pkgs-2511.fzf}/bin/fzf";
+    ".tmux/deps/fzf".source = "${pkgs.fzf}/bin/fzf";
     ".tmux/deps/bat".source = "${pkgs.bat}/bin/bat";
     ".tmux/deps/xsel".source = "${pkgs.xsel}/bin/xsel";
     ".tmux/deps/pidtree_mon".source = "${pidtree_mon}/bin/pidtree_mon";

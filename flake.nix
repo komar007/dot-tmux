@@ -1,10 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    # FIXME: we need relatively new nixfmt.
-    # Consolidate with nixpkgs when we are ready to switch to tmux-3.6a
-    nixpkgs-nixfmt.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgs-2511.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     flake-utils.url = "github:numtide/flake-utils";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -19,14 +15,8 @@
         pkgs = import inputs.nixpkgs {
           inherit system;
         };
-        pkgs-nixfmt = import inputs.nixpkgs-nixfmt {
-          inherit system;
-        };
-        pkgs-2511 = import inputs.nixpkgs-2511 {
-          inherit system;
-        };
         tmux = pkgs.tmux;
-        treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs-nixfmt ./treefmt.nix;
+        treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
       in
       rec {
         # My tmux configuration: this enables tmux + populates ~/.tmux.conf and ~/.tmux/
@@ -35,7 +25,7 @@
           import ./hm-module.nix (
             args
             // {
-              inherit pkgs tmux pkgs-2511;
+              inherit pkgs tmux;
             }
           );
         homeManagerModules.default = homeManagerModules.tmux;
@@ -48,7 +38,7 @@
           formatting = treefmtEval.config.build.check self;
           typos = pkgs.runCommand "typos-check" {
             nativeBuildInputs = [ pkgs.typos ];
-          } ''cd ${self} && typos . && touch $out'';
+          } "cd ${self} && typos . && touch $out";
         };
       }
     );
