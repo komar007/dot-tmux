@@ -3,11 +3,11 @@
 HOW="$1"
 
 if [ "$HOW" = "--list" ]; then
-    echo urls ctrl-u
     echo words ctrl-space
-    echo WORDS
-    echo sri ctrl-h
     echo hex
+    echo sri ctrl-h
+    echo WORDS
+    echo urls ctrl-u
     exit 0
 fi
 
