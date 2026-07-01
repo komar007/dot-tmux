@@ -31,6 +31,7 @@ in
     ".tmux/deps/fzf".source = "${pkgs.fzf}/bin/fzf";
     ".tmux/deps/bat".source = "${pkgs.bat}/bin/bat";
     ".tmux/deps/xsel".source = "${pkgs.xsel}/bin/xsel";
+    ".tmux/deps/xclip".source = "${pkgs.xclip}/bin/xclip";
     ".tmux/deps/pidtree_mon".source = "${pidtree_mon}/bin/pidtree_mon";
     ".tmux/deps/tput".source = "${pkgs.ncurses}/bin/tput";
     ".tmux/deps/ansi2txt".source = "${pkgs.colorized-logs}/bin/ansi2txt";
