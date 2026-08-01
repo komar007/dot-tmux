@@ -13,7 +13,7 @@ if [ "$HOW" = "--list" ]; then
 fi
 
 case "$HOW" in
-    urls) REGEX="https?:\/\/[^][ ^<>]+" ;;
+    urls) REGEX="https?:\/\/[^][ ^<>\"]+" ;;
     words) REGEX="[^][() 	]{4,}" ;;
     WORDS) REGEX="[^ 	]{4,}" ;;
     sri) REGEX="sha(256|384|512)-[A-Za-z0-9+/=]{44,88}" ;;
